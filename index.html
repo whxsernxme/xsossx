@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia Especial</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffcccb; /* Color de fondo rosado */
+            margin: 0;
+        }
+        #container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+        }
+        .question, .time-input {
+            margin-bottom: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Tengo una que otra consulta</h1>
+        <div id="trivia">
+            <div class="question">
+                <p>1. ¿Eres hermosa?</p>
+                <button class="answer">Si</button>
+                <button class="answer">SI</button>
+            </div>
+            <div class="question hidden">
+                <p>2. ¿Es muy bella?</p>
+                <button class="answer">Si</button>
+                <button class="answer">SI</button>
+            </div>
+            <div class="question hidden">
+                <p>3. ¿La morena más bella?</p>
+                <button class="answer">Si</button>
+                <button class="answer">SI</button>
+            </div>
+            <div class="question hidden">
+                <p>4. ¿La Geminiana más hermosa?</p>
+                <button class="answer">Si</button>
+                <button class="answer">SI</button>
+            </div>
+            <div class="question hidden">
+                <p>5. So fucking special?</p>
+                <button class="answer">Si</button>
+                <button class="answer">SI</button>
+            </div>
+            <div class="question hidden">
+                <p>6. ¿Podemos ir a comer cangrejos el día que usted elija?</p>
+                <button class="answer">Si</button>
+                <button class="answer">SI</button>
+            </div>
+            <div class="time-input hidden">
+                <p>Por favor, elige un día y una hora específica del mes de junio del 2024:</p>
+                <input type="datetime-local" id="datetime" name="datetime" min="2024-06-01T00:00" max="2024-06-30T23:59">
+                <button id="submit">Enviar</button>
+            </div>
+        </div>
+        <div id="result" class="hidden">
+            <p>¡Gracias por tus respuestas! Nos vemos en la fecha y hora que elegiste.</p>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 0;
+        const questions = document.querySelectorAll('.question');
+        const answerButtons = document.querySelectorAll('.answer');
+        const timeInput = document.querySelector('.time-input');
+        const result = document.getElementById('result');
+        
+        answerButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                if (currentQuestion < questions.length - 1) {
+                    questions[currentQuestion].classList.add('hidden');
+                    currentQuestion++;
+                    questions[currentQuestion].classList.remove('hidden');
+                } else {
+                    questions[currentQuestion].classList.add('hidden');
+                    timeInput.classList.remove('hidden');
+                }
+            });
+        });
+
+        document.getElementById('submit').addEventListener('click', () => {
+            const datetime = document.getElementById('datetime').value;
+            if (datetime) {
+                timeInput.classList.add('hidden');
+                result.classList.remove('hidden');
+                result.innerHTML = `<p>¡Gracias por tus respuestas! Nos vemos el ${new Date(datetime).toLocaleString()}.</p>, 
+                Please take a screenshot and send the link to the bastard who sent you the link :)`;
+            } else {
+                alert('Por favor, selecciona una fecha y hora.');
+            }
+        });
+    </script>
+</body>
+</html>
